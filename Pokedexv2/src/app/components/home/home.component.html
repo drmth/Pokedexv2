@@ -2,6 +2,6 @@
 
 <ul>
   <li *ngFor="let pokemon of pokemonsList">
-    {{ pokemon }}
+    <img [src]="pokemon.sprites.front_default" alt="pokemon.name">
   </li>
 </ul>
