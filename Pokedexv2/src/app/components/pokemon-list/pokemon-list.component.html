@@ -1,0 +1,19 @@
+<div class="card">
+  <div>
+    <div class="id_and_name">
+      <h2>{{ pokemon?.id }}</h2>
+      <h2>{{ pokemon?.name }}</h2>
+    </div>
+    <div class="type-container">
+      <p class="type" *ngFor="let type of pokemon?.types">
+        {{ type.type.name }}
+      </p>
+    </div>
+  </div>
+  <div class="isFavorite">
+    <button type="button" class="btn btn-floating" data-mdb-ripple-color="dark">
+      <i class="fas fa-star"></i>
+    </button>
+  </div>
+  <img [src]="pokemon?.sprites?.front_default" alt="image de pokemon" />
+</div>

@@ -1,7 +1,5 @@
-<p>home works!</p>
-
-<ul>
-  <li *ngFor="let pokemon of pokemonsList">
-    <img [src]="pokemon.sprites.front_default" alt="pokemon.name">
-  </li>
-</ul>
+<app-header></app-header>
+<app-filter></app-filter>
+<p *ngFor="let pokemon of pokemonsList">
+  <app-pokemon-list [pokemon] = "pokemon"></app-pokemon-list>
+</p>
