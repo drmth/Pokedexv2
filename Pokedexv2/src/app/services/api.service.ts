@@ -19,15 +19,13 @@ export class APIService {
         });
       });
 
-    console.log(this.pokemonsList);
-
     return this.pokemonsList;
   }
 
   getPokemonInfosFromAPI(pokemonName: string) {
     this.http
-      .get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-      .subscribe((pokemonFromAPI: any) => {
+      .get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+      .subscribe((pokemonFromAPI: Pokemon) => {
           this.pokemonsList.push(pokemonFromAPI);
       });
   }

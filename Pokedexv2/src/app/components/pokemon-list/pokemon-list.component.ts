@@ -13,5 +13,4 @@ export class PokemonListComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }
