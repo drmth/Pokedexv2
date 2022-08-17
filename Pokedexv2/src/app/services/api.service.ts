@@ -19,14 +19,14 @@ export class APIService {
 
   getListOfPokemonsAndURL(): Observable<Result[]> {
     return this.http
-      .get<ListOfPokemonAndURL>(`${URL}?limit=10`)
+      .get<ListOfPokemonAndURL>(`${this.URL}?limit=10`)
       .pipe(map((list: ListOfPokemonAndURL) => list.results));
   }
 
   getDetailedInfoForAPokemon(pokemonName: string) {
     try {
       this.http
-        .get<Pokemon>(`${URL}/${pokemonName}`)
+        .get<Pokemon>(`${this.URL}/${pokemonName}`)
         .subscribe((pokemon: Pokemon) =>
           this.listOfDetailedPokemon.push(pokemon)
         );

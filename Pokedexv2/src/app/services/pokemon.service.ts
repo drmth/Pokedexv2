@@ -17,8 +17,6 @@ export class PokemonService {
     if (this.listOfDetailedPokemons.length === 0) {
       this.getListOfPokemonAndURL();
       this.getDetailedListOfPokemon();
-
-      return this.listOfDetailedPokemons;
     }
 
     return this.listOfDetailedPokemons;
