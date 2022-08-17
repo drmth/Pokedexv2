@@ -39,8 +39,8 @@ export class PokemonService {
 
   getListOfPokemonType(): Type[] {
     this.listOfDetailedPokemons.forEach((pokemon) => {
-      pokemon.types.forEach((element) => {
-        this.pokemonTypes = pokemon.types;
+      pokemon.types.forEach((type) => {
+        this.pokemonTypes.push(type);
       });
     });
 
