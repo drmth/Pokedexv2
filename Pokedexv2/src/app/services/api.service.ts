@@ -1,32 +1,37 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Pokemon } from '../interfaces/pokemon';
+import {
+  ListOfPokemonAndURL,
+  Result,
+} from '../interfaces/list-of-pokemon-and-url';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class APIService {
-  pokemonsList: Pokemon[] = [];
+  URL = 'https://pokeapi.co/api/v2/pokemon';
+  listOfPokemonsAndURL: ListOfPokemonAndURL | undefined;
+  listOfDetailedPokemon: Pokemon[] = [];
 
   constructor(private http: HttpClient) {}
 
-  getListOfPokemonsFromAPI(): Pokemon[] {
-    this.http
-      .get('https://pokeapi.co/api/v2/pokemon?limit=10')
-      .subscribe((pokemons: any) => {
-        pokemons.results.forEach((pokemon: Pokemon) => {
-          this.getPokemonInfosFromAPI(pokemon.name);
-        });
-      });
-
-    return this.pokemonsList;
+  getListOfPokemonsAndURL(): Observable<Result[]> {
+    return this.http
+      .get<ListOfPokemonAndURL>(`${URL}?limit=10`)
+      .pipe(map((list: ListOfPokemonAndURL) => list.results));
   }
 
-  getPokemonInfosFromAPI(pokemonName: string) {
-    this.http
-      .get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-      .subscribe((pokemonFromAPI: Pokemon) => {
-          this.pokemonsList.push(pokemonFromAPI);
-      });
+  getDetailedInfoForAPokemon(pokemonName: string) {
+    try {
+      this.http
+        .get<Pokemon>(`${URL}/${pokemonName}`)
+        .subscribe((pokemon: Pokemon) =>
+          this.listOfDetailedPokemon.push(pokemon)
+        );
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
