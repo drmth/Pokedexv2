@@ -29,12 +29,12 @@ export class PokemonService {
   }
 
   getDetailedListOfPokemon() {
-    if (this.listOfPokemonAndURLFromAPI) {
-      this.listOfPokemonAndURLFromAPI.results.forEach((pokemon) => {
-        this.APIService.getDetailedInfoForAPokemon(pokemon.name);
-      });
+    if (this.listOfPokemonAndURLFromAPI.results.length === 0) {
+      return;
     }
-    this.listOfDetailedPokemons = this.APIService.listOfDetailedPokemon;
+    this.listOfPokemonAndURLFromAPI.results.forEach((pokemon) => {
+      this.APIService.getDetailedInfoForAPokemon(pokemon.name);
+    });
   }
 
   getListOfPokemonType(): Type[] {
