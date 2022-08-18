@@ -7,7 +7,7 @@ import { APIService } from './api.service';
   providedIn: 'root',
 })
 export class PokemonService {
-  listOfPokemonAndURLFromAPI = {} as ListOfPokemonAndURL;
+  listOfPokemonAndURLFromAPI?: ListOfPokemonAndURL;
   listOfDetailedPokemons: Pokemon[] = [];
   pokemonTypes: Type[] = [];
 
@@ -16,7 +16,6 @@ export class PokemonService {
   getListOfPokemon(): Pokemon[] {
     if (this.listOfDetailedPokemons.length === 0) {
       this.getListOfPokemonAndURL();
-      this.getDetailedListOfPokemon();
     }
 
     return this.listOfDetailedPokemons;
@@ -24,12 +23,13 @@ export class PokemonService {
 
   getListOfPokemonAndURL() {
     this.APIService.getListOfPokemonsAndURL().subscribe((results) => {
-      this.listOfPokemonAndURLFromAPI.results = results;
+      this.listOfPokemonAndURLFromAPI = results;
+      this.getDetailedListOfPokemon();
     });
   }
 
   getDetailedListOfPokemon() {
-    this.listOfPokemonAndURLFromAPI.results.forEach((pokemon) => {
+    this.listOfPokemonAndURLFromAPI?.results.forEach((pokemon) => {
       this.APIService.getDetailedInfoForAPokemon(pokemon.name).subscribe(
         (pokemon: Pokemon) => {
           this.listOfDetailedPokemons.push(pokemon);
