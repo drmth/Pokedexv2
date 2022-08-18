@@ -17,5 +17,4 @@ export enum PokemonType {
   DRAGON,
   FIGHTING,
   FAIRY,
-  NONE,
 }
