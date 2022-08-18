@@ -8,7 +8,7 @@ import { APIService } from './api.service';
 })
 export class PokemonService {
   listOfPokemonAndURLFromAPI?: ListOfPokemonAndURL;
-  listOfDetailedPokemons: Pokemon[] = [];
+  public listOfDetailedPokemons: Pokemon[] = [];
   pokemonTypes: string[] = [];
 
   listOfDetailedPokemons2: Pokemon[] = [];
