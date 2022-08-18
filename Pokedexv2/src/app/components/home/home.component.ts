@@ -11,7 +11,7 @@ export class HomeComponent implements OnInit {
   pokemonsList: Pokemon[] = [];
 
   constructor(private pokemonService: PokemonService) {
-    this.pokemonsList = this.pokemonService.getListOfPokemon();
+    this.pokemonsList = this.pokemonService.getListOfPokemon('');
   }
 
   ngOnInit(): void {}

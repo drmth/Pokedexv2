@@ -1,16 +1,38 @@
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">My Pokemons</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pokedex</a>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="pikachu" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+<link
+  rel="tylesheet"
+  href="https://bootswatch.com/_vendor/bootstrap/dist/css/bootstrap.min.css"
+/>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">My Pokemons</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarColor02"
+      aria-controls="navbarColor02"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#"
+            >Pokedex
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-sm-2" type="text" placeholder="pikachu" />
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">
+          Search
+        </button>
+      </form>
+    </div>
   </div>
 </nav>
+<br />

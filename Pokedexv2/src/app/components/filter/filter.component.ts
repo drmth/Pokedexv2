@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PokemonType } from 'src/app/interfaces/pokemon-type';
 import { PokemonService } from 'src/app/services/pokemon.service';
 
 @Component({
@@ -7,10 +8,18 @@ import { PokemonService } from 'src/app/services/pokemon.service';
   styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent implements OnInit {
-  pokemonType: string[] | undefined;
+  pokemonType: string[] = [];
 
   constructor(private pokemonService: PokemonService) {
-    this.pokemonType = this.pokemonService.getListOfPokemonType();
+    for (let type in PokemonType) {
+      if (isNaN(Number(type))) {
+        this.pokemonType.push(type);
+      }
+    }
+  }
+
+  filterListOfPokemonByType(type: string) {
+    this.pokemonService.getListOfPokemon(type);
   }
 
   ngOnInit(): void {}

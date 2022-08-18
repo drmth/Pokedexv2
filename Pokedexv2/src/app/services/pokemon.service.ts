@@ -11,11 +11,18 @@ export class PokemonService {
   listOfDetailedPokemons: Pokemon[] = [];
   pokemonTypes: string[] = [];
 
+  listOfDetailedPokemons2: Pokemon[] = [];
+
   constructor(private APIService: APIService) {}
 
-  getListOfPokemon(): Pokemon[] {
+  getListOfPokemon(type: string): Pokemon[] {
     if (this.listOfDetailedPokemons.length === 0) {
       this.getListOfPokemonAndURL();
+      return this.listOfDetailedPokemons;
+    }
+
+    if (type) {
+      return this.filterListOfPokemonByType(type);
     }
 
     return this.listOfDetailedPokemons;
@@ -39,15 +46,33 @@ export class PokemonService {
     });
   }
 
-  getListOfPokemonType(): string[] {
-    if (!this.pokemonTypes) {
-      this.listOfDetailedPokemons.forEach((pokemon) => {
-        pokemon.types.forEach((type) => {
-          this.pokemonTypes.push(type.type.name);
-        });
-      });
+  filterListOfPokemonByType(type: string): Pokemon[] {
+    const pok: Pokemon[] = [];
+    for (let pokemon of this.listOfDetailedPokemons) {
+      for (let pokemonType of pokemon.types) {
+        if (pokemonType.type.name == type.toLowerCase()) {
+          pok.push(pokemon);
+        }
+      }
     }
 
-    return [...new Set(this.pokemonTypes)];
+    /* return this.listOfDetailedPokemons.filter((pokemon) =>
+      pokemon.types.forEach((pokemontype) => {
+        console.log(pokemontype.type.name == type.toLowerCase());
+        pokemontype.type.name == type.toLowerCase();
+      })
+    ); */
+
+    return pok;
+  }
+
+  getListOfPokemonType() {
+    /* this.listOfDetailedPokemons.forEach((pokemon) => {
+      pokemon.types.forEach((type) => {
+        this.pokemonTypes.push(type.type.name);
+      });
+    });
+
+    return [...new Set(this.pokemonTypes)]; */
   }
 }
