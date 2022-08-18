@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "pokemon-item.component.scss"
+    ],
+    "names": [],
+    "file": "pokemon-item.component.css"
+}
