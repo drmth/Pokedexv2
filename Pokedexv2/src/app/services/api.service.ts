@@ -15,17 +15,12 @@ export class APIService {
 
   constructor(private http: HttpClient) {}
 
-  getListOfPokemonsAndURL(): Observable<Result[]> {
+  getListOfPokemonsAndURL(): Observable<ListOfPokemonAndURL> {
     return this.http
-      .get<ListOfPokemonAndURL>(`${this.URL}?limit=10`)
-      .pipe(map((list: ListOfPokemonAndURL) => list.results));
+      .get<ListOfPokemonAndURL>(`${this.URL}?limit=10`);
   }
 
   getDetailedInfoForAPokemon(pokemonName: string): any {
-    this.http.get<Pokemon>(`${this.URL}/${pokemonName}`).pipe(
-      switchMap((pokemon: any) => {
-        return pokemon;
-      })
-    );
+    return this.http.get<Pokemon>(`${this.URL}/${pokemonName}`);
   }
 }
