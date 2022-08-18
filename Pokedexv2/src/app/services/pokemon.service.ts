@@ -9,7 +9,7 @@ import { APIService } from './api.service';
 export class PokemonService {
   listOfPokemonAndURLFromAPI?: ListOfPokemonAndURL;
   listOfDetailedPokemons: Pokemon[] = [];
-  pokemonTypes: Type[] = [];
+  pokemonTypes: string[] = [];
 
   constructor(private APIService: APIService) {}
 
@@ -33,20 +33,21 @@ export class PokemonService {
       this.APIService.getDetailedInfoForAPokemon(pokemon.name).subscribe(
         (pokemon: Pokemon) => {
           this.listOfDetailedPokemons.push(pokemon);
+          this.getListOfPokemonType();
         }
       );
     });
   }
 
-  getListOfPokemonType(): Type[] {
-    this.listOfDetailedPokemons.forEach((pokemon) => {
-      pokemon.types.forEach((type) => {
-        this.pokemonTypes.push(type);
+  getListOfPokemonType(): string[] {
+    if (!this.pokemonTypes) {
+      this.listOfDetailedPokemons.forEach((pokemon) => {
+        pokemon.types.forEach((type) => {
+          this.pokemonTypes.push(type.type.name);
+        });
       });
-    });
+    }
 
-    //console.log(new Set(this.pokemonTypes));
-
-    return this.pokemonTypes;
+    return [...new Set(this.pokemonTypes)];
   }
 }

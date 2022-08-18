@@ -7,10 +7,10 @@ import { PokemonService } from 'src/app/services/pokemon.service';
   styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent implements OnInit {
-  pokemonType: [] | undefined;
+  pokemonType: string[] | undefined;
 
   constructor(private pokemonService: PokemonService) {
-    this.pokemonService.getListOfPokemonType();
+    this.pokemonType = this.pokemonService.getListOfPokemonType();
   }
 
   ngOnInit(): void {}
