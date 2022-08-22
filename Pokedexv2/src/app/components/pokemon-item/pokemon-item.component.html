@@ -1,1 +1,25 @@
-<p>pokemon-item works!</p>
+<app-header></app-header>
+
+<div class="container">
+  <div>
+    <h1>{{ currentPokemon?.name }}</h1>
+    <h2>{{ currentPokemon?.id }}</h2>
+  </div>
+  <div class="type-container">
+    <p class="type" *ngFor="let type of currentPokemon?.types">
+      {{ type.type.name }}
+    </p>
+  </div>
+  <div>
+    <img
+      [src]="currentPokemon?.sprites?.front_default"
+      alt="{{ currentPokemon?.name }}"
+    />
+  </div>
+
+  <div></div>
+
+  <div *ngFor="let pokemon of evolution">
+    {{ pokemon }}
+  </div>
+</div>

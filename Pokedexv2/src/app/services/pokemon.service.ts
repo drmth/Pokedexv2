@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Pokemon, Type } from '../interfaces/pokemon';
 import { ListOfPokemonAndURL } from '../interfaces/list-of-pokemon-and-url';
 import { APIService } from './api.service';
+import { switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,9 +10,6 @@ import { APIService } from './api.service';
 export class PokemonService {
   listOfPokemonAndURLFromAPI?: ListOfPokemonAndURL;
   public listOfDetailedPokemons: Pokemon[] = [];
-  pokemonTypes: string[] = [];
-
-  listOfDetailedPokemons2: Pokemon[] = [];
 
   constructor(private APIService: APIService) {}
 
@@ -40,7 +38,6 @@ export class PokemonService {
       this.APIService.getDetailedInfoForAPokemon(pokemon.name).subscribe(
         (pokemon: Pokemon) => {
           this.listOfDetailedPokemons.push(pokemon);
-          this.getListOfPokemonType();
         }
       );
     });
@@ -62,17 +59,22 @@ export class PokemonService {
         pokemontype.type.name == type.toLowerCase();
       })
     ); */
-
     return pok;
   }
 
-  getListOfPokemonType() {
-    /* this.listOfDetailedPokemons.forEach((pokemon) => {
-      pokemon.types.forEach((type) => {
-        this.pokemonTypes.push(type.type.name);
-      });
-    });
+  getDetailedPokemon(pokemonName: string): Pokemon {
+    return this.listOfDetailedPokemons.filter(
+      (pokemon: Pokemon) => pokemon.name === pokemonName
+    )[0];
+  }
 
-    return [...new Set(this.pokemonTypes)]; */
+  getPokemonEvolutionChain(currentPokemonID: number) {
+    return this.APIService.getPokemonEvolutionChain(currentPokemonID).pipe(
+      switchMap((pokemonEvolutionChain) =>
+        this.APIService.getPokemonEvolution(
+          pokemonEvolutionChain.evolution_chain.url
+        )
+      )
+    );
   }
 }
