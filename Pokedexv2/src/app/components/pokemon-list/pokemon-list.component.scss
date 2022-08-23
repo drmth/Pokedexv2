@@ -4,8 +4,9 @@ $small_space: 8px;
 $medium_space: 16px;
 $large_space: 24px;
 
-button {
+.filter {
   margin-left: $large_space;
+  display: inline-block;
 }
 
 .card {

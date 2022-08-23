@@ -19,7 +19,7 @@ export class FilterComponent implements OnInit {
   }
 
   filterListOfPokemonByType(type: string) {
-    this.pokemonService.getListOfPokemon(type);
+    //this.pokemonService.getListOfPokemon(type);
   }
 
   ngOnInit(): void {}

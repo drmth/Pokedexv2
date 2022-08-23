@@ -9,15 +9,25 @@ import { PokemonService } from 'src/app/services/pokemon.service';
   styleUrls: ['./pokemon-list.component.scss'],
 })
 export class PokemonListComponent {
-  pokemonsList: Pokemon[] = this.pokemonService.getListOfPokemon('');
+  pokemonsList: Pokemon[] = this.pokemonService.getListOfPokemon([]);
   pokemonType: string[] = [];
+  filters: string[] = [];
 
   constructor(private pokemonService: PokemonService) {
     this.getPokemonType();
   }
 
   filterListOfPokemonByType(type: string) {
-    this.pokemonsList = this.pokemonService.getListOfPokemon(type);
+    this.filters.push(type);
+    this.pokemonsList = this.pokemonService.getListOfPokemon(this.filters);
+  }
+
+  removeFilter(filter: string) {
+    const index = this.filters.indexOf(filter);
+    if (index > -1) {
+      this.filters.splice(index, 1);
+    }
+    this.pokemonsList = this.pokemonService.getListOfPokemon(this.filters);
   }
 
   getPokemonType(): string[] {

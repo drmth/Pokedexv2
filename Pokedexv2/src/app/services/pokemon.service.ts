@@ -13,14 +13,14 @@ export class PokemonService {
 
   constructor(private APIService: APIService) {}
 
-  getListOfPokemon(type: string): Pokemon[] {
+  getListOfPokemon(types: string[]): Pokemon[] {
     if (this.listOfDetailedPokemons.length === 0) {
       this.getListOfPokemonAndURL();
       return this.listOfDetailedPokemons;
     }
 
-    if (type) {
-      return this.filterListOfPokemonByType(type);
+    if (types.length > 0) {
+      return this.filterListOfPokemonByType(types);
     }
 
     return this.listOfDetailedPokemons;
@@ -43,23 +43,18 @@ export class PokemonService {
     });
   }
 
-  filterListOfPokemonByType(type: string): Pokemon[] {
-    const pok: Pokemon[] = [];
-    for (let pokemon of this.listOfDetailedPokemons) {
-      for (let pokemonType of pokemon.types) {
-        if (pokemonType.type.name == type.toLowerCase()) {
-          pok.push(pokemon);
-        }
-      }
-    }
-
-    /* return this.listOfDetailedPokemons.filter((pokemon) =>
-      pokemon.types.forEach((pokemontype) => {
-        console.log(pokemontype.type.name == type.toLowerCase());
-        pokemontype.type.name == type.toLowerCase();
-      })
-    ); */
-    return pok;
+  filterListOfPokemonByType(types: string[]): Pokemon[] {
+    return this.listOfDetailedPokemons.filter((pokemon) => {
+      let doesPokemonMatchTheType: boolean[] = [];
+      pokemon.types.forEach((pokemonType) => {
+        types.forEach((type) => {
+          doesPokemonMatchTheType.push(
+            pokemonType.type.name.includes(type.toLowerCase())
+          );
+        });
+      });
+      return doesPokemonMatchTheType.includes(true);
+    });
   }
 
   getDetailedPokemon(pokemonName: string): Pokemon {

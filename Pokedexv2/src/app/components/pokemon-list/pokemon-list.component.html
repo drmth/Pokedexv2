@@ -21,6 +21,20 @@
 </div>
 
 <br />
+<div *ngFor="let filter of filters">
+  <div class="filter">
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      id="{{ filter }}"
+      (click)="removeFilter(filter)"
+    ></button>
+    <label for="{{ filter }}">{{ filter }}</label>
+  </div>
+</div>
+
+<br />
 
 <div *ngFor="let pokemon of pokemonsList">
   <div class="card" [routerLink]="['/pokemon', pokemon.name]">
@@ -29,22 +43,15 @@
       <div>
         <div class="id_and_name">
           <h2>{{ pokemon.id }}</h2>
-          <h2>{{ pokemon.name }}</h2>
+          <h2>
+            {{ pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1) }}
+          </h2>
         </div>
         <div class="type-container">
           <p class="type" *ngFor="let type of pokemon.types">
             {{ type.type.name }}
           </p>
         </div>
-      </div>
-      <div class="isFavorite">
-        <button
-          type="button"
-          class="btn btn-floating"
-          data-mdb-ripple-color="dark"
-        >
-          <i class="fas fa-star"></i>
-        </button>
       </div>
       <img [src]="pokemon.sprites.front_default" alt="{{ pokemon.name }}" />
     </ng-template>
