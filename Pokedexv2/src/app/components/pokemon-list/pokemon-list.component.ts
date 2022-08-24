@@ -14,7 +14,7 @@ import { PokemonService } from 'src/app/services/pokemon.service';
   templateUrl: './pokemon-list.component.html',
   styleUrls: ['./pokemon-list.component.scss'],
 })
-export class PokemonListComponent implements OnChanges {
+export class PokemonListComponent {
   pokemonsList: Pokemon[] = this.pokemonService.getListOfPokemon([]);
   pokemonType: string[] = [];
   filters: string[] = [];
@@ -22,14 +22,6 @@ export class PokemonListComponent implements OnChanges {
 
   constructor(private pokemonService: PokemonService) {
     this.getPokemonType();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.getUserResearch();
-  }
-
-  getUserResearch() {
-    console.log(this.userResearch);
   }
 
   filterListOfPokemonByType(type: string) {

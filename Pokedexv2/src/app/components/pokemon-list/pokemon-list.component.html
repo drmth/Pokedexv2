@@ -36,7 +36,11 @@
 
 <br />
 
-<div *ngFor="let pokemon of pokemonsList">
+<div
+  *ngFor="
+    let pokemon of pokemonsList | filterPokemonArayWithString: userResearch
+  "
+>
   <div class="card" [routerLink]="['/pokemon', pokemon.name]">
     <div *ngIf="pokemonsList; then show_pokemon; else loader"></div>
     <ng-template #show_pokemon>

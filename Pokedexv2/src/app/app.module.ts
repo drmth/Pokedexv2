@@ -10,6 +10,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FilterComponent } from './components/filter/filter.component';
 import { FormsModule } from '@angular/forms';
+import { FilterPokemonArayWithStringPipe } from './pipe/filter-pokemon-aray-with-string.pipe';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FormsModule } from '@angular/forms';
     PokemonListComponent,
     HeaderComponent,
     FilterComponent,
+    FilterPokemonArayWithStringPipe,
   ],
   imports: [
     BrowserModule,
