@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Pokemon, Type } from '../interfaces/pokemon';
+import { Pokemon } from '../interfaces/pokemon';
 import { ListOfPokemonAndURL } from '../interfaces/list-of-pokemon-and-url';
 import { APIService } from './api.service';
 import { switchMap } from 'rxjs';
@@ -10,17 +10,22 @@ import { switchMap } from 'rxjs';
 export class PokemonService {
   listOfPokemonAndURLFromAPI?: ListOfPokemonAndURL;
   public listOfDetailedPokemons: Pokemon[] = [];
+  filteredListOfPokemon: Pokemon[] = [];
+  typesFilter: string[] | undefined;
+  searchFilter: string = '';
 
   constructor(private APIService: APIService) {}
 
   getListOfPokemon(types: string[]): Pokemon[] {
     if (this.listOfDetailedPokemons.length === 0) {
       this.getListOfPokemonAndURL();
-      return this.listOfDetailedPokemons;
     }
 
     if (types.length > 0) {
-      return this.filterListOfPokemonByType(types);
+      this.typesFilter = types;
+      this.filteredListOfPokemon = this.filterListOfPokemonByType(types);
+      if (this.searchFilter === '') return this.filteredListOfPokemon;
+      return this.filterListOfPokemonBySearch(this.searchFilter);
     }
 
     return this.listOfDetailedPokemons;
@@ -41,6 +46,7 @@ export class PokemonService {
         }
       );
     });
+    this.filteredListOfPokemon = this.listOfDetailedPokemons;
   }
 
   filterListOfPokemonByType(types: string[]): Pokemon[] {
@@ -54,6 +60,17 @@ export class PokemonService {
         });
       });
       return doesPokemonMatchTheType.includes(true);
+    });
+  }
+
+  setSearchFilter(search: string) {
+    this.searchFilter = search;
+    this.filterListOfPokemonBySearch(search);
+  }
+
+  filterListOfPokemonBySearch(search: string): Pokemon[] {
+    return this.filteredListOfPokemon.filter((pokemon) => {
+      pokemon.name.includes(search);
     });
   }
 

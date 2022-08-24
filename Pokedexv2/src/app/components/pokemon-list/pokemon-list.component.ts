@@ -1,4 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Pokemon } from 'src/app/interfaces/pokemon';
 import { PokemonType } from 'src/app/interfaces/pokemon-type';
 import { PokemonService } from 'src/app/services/pokemon.service';
@@ -8,13 +14,22 @@ import { PokemonService } from 'src/app/services/pokemon.service';
   templateUrl: './pokemon-list.component.html',
   styleUrls: ['./pokemon-list.component.scss'],
 })
-export class PokemonListComponent {
+export class PokemonListComponent implements OnChanges {
   pokemonsList: Pokemon[] = this.pokemonService.getListOfPokemon([]);
   pokemonType: string[] = [];
   filters: string[] = [];
+  @Input() userResearch: string = '';
 
   constructor(private pokemonService: PokemonService) {
     this.getPokemonType();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.getUserResearch();
+  }
+
+  getUserResearch() {
+    console.log(this.userResearch);
   }
 
   filterListOfPokemonByType(type: string) {

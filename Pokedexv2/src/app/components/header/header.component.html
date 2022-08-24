@@ -27,12 +27,19 @@
         </li>
       </ul>
       <form class="d-flex">
-        <input class="form-control me-sm-2" type="text" placeholder="pikachu" />
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">
-          Search
-        </button>
+        <input
+          class="form-control me-sm-2"
+          type="text"
+          placeholder="pikachu"
+          name="pokemonNameInput"
+          [(ngModel)]="pokemonInputValue"
+          (input)="onUserResearchChange($event)"
+          class="form-control"
+          id="pokemonNameInput"
+        />
       </form>
     </div>
   </div>
 </nav>
+
 <br />

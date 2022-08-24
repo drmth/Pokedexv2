@@ -1,2 +1,5 @@
-<app-header></app-header>
-<app-pokemon-list></app-pokemon-list>
+<app-header
+  class="header"
+  (userSearchingPokemonEvent)="onUserResearch($event)"
+></app-header>
+<app-pokemon-list [userResearch]="userResearch" class="list"></app-pokemon-list>

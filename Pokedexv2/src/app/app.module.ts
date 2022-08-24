@@ -9,6 +9,7 @@ import { PokemonListComponent } from './components/pokemon-list/pokemon-list.com
 import { HeaderComponent } from './components/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FilterComponent } from './components/filter/filter.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,15 +18,16 @@ import { FilterComponent } from './components/filter/filter.component';
     PokemonItemComponent,
     PokemonListComponent,
     HeaderComponent,
-    FilterComponent
+    FilterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
+    FormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
