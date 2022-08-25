@@ -9,11 +9,34 @@ $large_space: 24px;
   display: inline-block;
 }
 
-.card {
-  width: 100%;
+.selectedFilter {
+  margin: $small_space;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+
+  .card {
+    padding: $small_space;
+    margin: $medium_space;
+    border-radius: $large_space;
+
+    .center_elements {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+@mixin colorTypeLabel {
+}
+/*.card {
   margin: $large_space;
   border-radius: $large_space;
-  border: 0.08rem solid black;
 
   h2 {
     margin: $medium_space;
@@ -50,4 +73,4 @@ $large_space: 24px;
   .isFavorite {
     height: 10px;
   }
-}
+}*/

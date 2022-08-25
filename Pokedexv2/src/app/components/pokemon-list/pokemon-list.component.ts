@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Pokemon } from 'src/app/interfaces/pokemon';
 import { PokemonType } from 'src/app/interfaces/pokemon-type';
 import { PokemonService } from 'src/app/services/pokemon.service';
@@ -16,7 +10,6 @@ import { PokemonService } from 'src/app/services/pokemon.service';
 })
 export class PokemonListComponent {
   pokemonsList: Pokemon[] = this.pokemonService.getListOfPokemon([]);
-  pokemonType: string[] = [];
   filters: string[] = [];
   @Input() userResearch: string = '';
 
@@ -38,11 +31,17 @@ export class PokemonListComponent {
   }
 
   getPokemonType(): string[] {
-    for (let type in PokemonType) {
-      if (isNaN(Number(type))) {
-        this.pokemonType.push(type);
-      }
-    }
-    return this.pokemonType.sort();
+    return Object.keys(PokemonType)
+      .filter((key) => isNaN(+key))
+      .sort();
+  }
+
+  getTypeColor(type: string): string {
+    const indexOfType = Object.keys(PokemonType).indexOf(
+      type.toUpperCase() as unknown as PokemonType
+    );
+    const colorValue = Object.values(PokemonType)[indexOfType];
+
+    return colorValue;
   }
 }

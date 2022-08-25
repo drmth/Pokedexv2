@@ -1,19 +1,21 @@
-<div class="row">
-  <div class="col">
-    <div ngbDropdown class="d-inline-block">
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        id="dropdownBasic1"
-        ngbDropdownToggle
-      >
-        Filtrer
-      </button>
-      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <div *ngFor="let type of pokemonType">
-          <button ngbDropdownItem (click)="filterListOfPokemonByType(type)">
-            {{ type }}
-          </button>
+<div class="filter">
+  <div class="row">
+    <div class="col">
+      <div ngbDropdown class="d-inline-block">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          id="dropdownBasic1"
+          ngbDropdownToggle
+        >
+          Filtrer
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <div *ngFor="let type of getPokemonType()">
+            <button ngbDropdownItem (click)="filterListOfPokemonByType(type)">
+              {{ type }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -21,26 +23,64 @@
 </div>
 
 <br />
-<div *ngFor="let filter of filters">
-  <div class="filter">
-    <button
-      type="button"
-      class="btn-close"
-      aria-label="Close"
-      id="{{ filter }}"
-      (click)="removeFilter(filter)"
-    ></button>
-    <label for="{{ filter }}">{{ filter }}</label>
+<div class="selectedFilter">
+  <div *ngFor="let filter of filters">
+    <div class="filter">
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        id="{{ filter }}"
+        (click)="removeFilter(filter)"
+      ></button>
+      <label for="{{ filter }}">{{ filter }}</label>
+    </div>
   </div>
 </div>
 
 <br />
 
+<div class="wrapper">
+  <div
+    *ngFor="
+      let pokemon of pokemonsList | filterPokemonArayWithString: userResearch
+    "
+  >
+    <div class="card">
+      <div>
+        <h3>#{{ pokemon.id }}</h3>
+      </div>
+      <div class="center_elements">
+        <img [src]="pokemon.sprites.front_default" alt="{{ pokemon.name }}" />
+      </div>
+      <div class="center_elements">
+        <h2>
+          {{ pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1) }}
+        </h2>
+      </div>
+      <div class="center_elements">
+        <div *ngFor="let type of pokemon.types; let indexOfelement = index">
+          <p style="color: {{ getTypeColor(type.type.name) }}">
+            {{ type.type.name }}&nbsp;
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--
 <div
   *ngFor="
     let pokemon of pokemonsList | filterPokemonArayWithString: userResearch
   "
 >
+  <div>
+    <h2>{{ pokemon.id }}</h2>
+    <h2>
+      {{ pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1) }}
+    </h2>
+  </div>
+
   <div class="card" [routerLink]="['/pokemon', pokemon.name]">
     <div *ngIf="pokemonsList; then show_pokemon; else loader"></div>
     <ng-template #show_pokemon>
@@ -65,4 +105,4 @@
       </div>
     </ng-template>
   </div>
-</div>
+</div> -->
