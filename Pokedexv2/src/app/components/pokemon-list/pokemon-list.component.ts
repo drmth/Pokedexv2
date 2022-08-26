@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Pokemon } from 'src/app/interfaces/pokemon';
-import { PokemonType } from 'src/app/interfaces/pokemon-type';
+import { PokemonTypeEnum } from 'src/app/interfaces/pokemon-type';
 import { PokemonService } from 'src/app/services/pokemon.service';
 
 @Component({
@@ -12,6 +12,7 @@ export class PokemonListComponent {
   pokemonsList: Pokemon[] = this.pokemonService.getListOfPokemon([]);
   filters: string[] = [];
   @Input() userResearch: string = '';
+  trueBoolean: boolean = true;
 
   constructor(private pokemonService: PokemonService) {
     this.getPokemonType();
@@ -31,17 +32,10 @@ export class PokemonListComponent {
   }
 
   getPokemonType(): string[] {
-    return Object.keys(PokemonType)
-      .filter((key) => isNaN(+key))
-      .sort();
+    return this.pokemonService.getPokemonType();
   }
 
   getTypeColor(type: string): string {
-    const indexOfType = Object.keys(PokemonType).indexOf(
-      type.toUpperCase() as unknown as PokemonType
-    );
-    const colorValue = Object.values(PokemonType)[indexOfType];
-
-    return colorValue;
+    return this.pokemonService.getTypeColor(type);
   }
 }

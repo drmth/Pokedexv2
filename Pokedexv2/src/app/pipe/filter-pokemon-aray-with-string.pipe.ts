@@ -9,12 +9,9 @@ import { Pokemon } from '../interfaces/pokemon';
 export class FilterPokemonArayWithStringPipe implements PipeTransform {
   transform(pokemonsList: Pokemon[], userResearch: string): Pokemon[] {
     if (userResearch === '') return pokemonsList;
-    let filteredListOfPokemon = [] as Pokemon[];
-    pokemonsList.forEach((pokemon: Pokemon) => {
-      if (pokemon.name.includes(userResearch)) {
-        filteredListOfPokemon.push(pokemon);
-      }
+
+    return pokemonsList.filter((pokemon: Pokemon) => {
+      return pokemon.name.includes(userResearch);
     });
-    return filteredListOfPokemon;
   }
 }

@@ -1,4 +1,4 @@
-export enum PokemonType {
+export enum PokemonTypeEnum {
   NORMAL = '#000000',
   GRASS = '#2ECC71',
   ELECTRIC = '#FFFF00',
@@ -12,7 +12,7 @@ export enum PokemonType {
   FLYING = '#FFF0F5',
   ICE = '#000000',
   POISON = '#9932CC',
-  GROUND = '#000000',
+  GROUND = '#5B3C11',
   ROCK = '#808080',
   DRAGON = '#FFA500',
   FIGHTING = '#FF0000',

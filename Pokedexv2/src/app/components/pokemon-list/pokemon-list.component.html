@@ -23,6 +23,7 @@
 </div>
 
 <br />
+
 <div class="selectedFilter">
   <div *ngFor="let filter of filters">
     <div class="filter">
@@ -41,12 +42,18 @@
 <br />
 
 <div class="wrapper">
+  <div class="loader" *ngIf="pokemonsList.length == 0; then loader"></div>
+  <ng-template #loader>
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only"></span>
+    </div>
+  </ng-template>
   <div
     *ngFor="
       let pokemon of pokemonsList | filterPokemonArayWithString: userResearch
     "
   >
-    <div class="card">
+    <div class="card" [routerLink]="['/pokemon', pokemon.name]">
       <div>
         <h3>#{{ pokemon.id }}</h3>
       </div>
@@ -65,44 +72,22 @@
           </p>
         </div>
       </div>
+      <div class="center_elements">
+        <img
+          src="/assets/images/baseline_height_black_24dp.png"
+          alt="height_icon"
+        />
+        height:&nbsp;
+        <div>{{ pokemon.height }}</div>
+      </div>
+      <div class="center_elements">
+        <img
+          src="/assets/images/baseline_scale_black_24dp.png"
+          alt="scale_icon"
+        />
+        weight:&nbsp;
+        <div>{{ pokemon.weight }}</div>
+      </div>
     </div>
   </div>
 </div>
-<!--
-<div
-  *ngFor="
-    let pokemon of pokemonsList | filterPokemonArayWithString: userResearch
-  "
->
-  <div>
-    <h2>{{ pokemon.id }}</h2>
-    <h2>
-      {{ pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1) }}
-    </h2>
-  </div>
-
-  <div class="card" [routerLink]="['/pokemon', pokemon.name]">
-    <div *ngIf="pokemonsList; then show_pokemon; else loader"></div>
-    <ng-template #show_pokemon>
-      <div>
-        <div class="id_and_name">
-          <h2>{{ pokemon.id }}</h2>
-          <h2>
-            {{ pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1) }}
-          </h2>
-        </div>
-        <div class="type-container">
-          <p class="type" *ngFor="let type of pokemon.types">
-            {{ type.type.name }}
-          </p>
-        </div>
-      </div>
-      <img [src]="pokemon.sprites.front_default" alt="{{ pokemon.name }}" />
-    </ng-template>
-    <ng-template #loader>
-      <div class="spinner-border text-primary" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </ng-template>
-  </div>
-</div> -->

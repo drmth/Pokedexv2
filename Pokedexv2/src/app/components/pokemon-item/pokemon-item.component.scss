@@ -4,11 +4,15 @@ $small_space: 8px;
 $medium_space: 16px;
 $large_space: 24px;
 
-.type {
+.pokemon_simple_infos {
+  width: 30%;
+}
+
+/* .type {
   text-align: center;
   background-color: $gray_color;
   padding: $small_space;
   margin: $small_space;
   border-radius: $large_space;
   border: 0.08rem solid black;
-}
+} */

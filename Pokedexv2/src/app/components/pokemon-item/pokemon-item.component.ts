@@ -63,4 +63,8 @@ export class PokemonItemComponent implements OnInit {
     }
     return true;
   }
+
+  getTypeColor(type: string): string {
+    return this.pokemonService.getTypeColor(type);
+  }
 }

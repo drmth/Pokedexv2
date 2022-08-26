@@ -3,6 +3,7 @@ import { Pokemon } from '../interfaces/pokemon';
 import { ListOfPokemonAndURL } from '../interfaces/list-of-pokemon-and-url';
 import { APIService } from './api.service';
 import { switchMap } from 'rxjs';
+import { PokemonTypeEnum } from '../interfaces/pokemon-type';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,6 @@ import { switchMap } from 'rxjs';
 export class PokemonService {
   listOfPokemonAndURLFromAPI?: ListOfPokemonAndURL;
   public listOfDetailedPokemons: Pokemon[] = [];
-  filteredListOfPokemon: Pokemon[] = [];
   typesFilter: string[] | undefined;
   searchFilter: string = '';
 
@@ -23,9 +23,7 @@ export class PokemonService {
 
     if (types.length > 0) {
       this.typesFilter = types;
-      this.filteredListOfPokemon = this.filterListOfPokemonByType(types);
-      if (this.searchFilter === '') return this.filteredListOfPokemon;
-      return this.filterListOfPokemonBySearch(this.searchFilter);
+      return this.filterListOfPokemonByType(types);
     }
 
     return this.listOfDetailedPokemons;
@@ -46,7 +44,6 @@ export class PokemonService {
         }
       );
     });
-    this.filteredListOfPokemon = this.listOfDetailedPokemons;
   }
 
   filterListOfPokemonByType(types: string[]): Pokemon[] {
@@ -60,17 +57,6 @@ export class PokemonService {
         });
       });
       return doesPokemonMatchTheType.includes(true);
-    });
-  }
-
-  setSearchFilter(search: string) {
-    this.searchFilter = search;
-    this.filterListOfPokemonBySearch(search);
-  }
-
-  filterListOfPokemonBySearch(search: string): Pokemon[] {
-    return this.filteredListOfPokemon.filter((pokemon) => {
-      pokemon.name.includes(search);
     });
   }
 
@@ -88,5 +74,20 @@ export class PokemonService {
         )
       )
     );
+  }
+
+  getPokemonType(): string[] {
+    return Object.keys(PokemonTypeEnum)
+      .filter((key) => isNaN(+key))
+      .sort();
+  }
+
+  getTypeColor(type: string): string {
+    const indexOfType = Object.keys(PokemonTypeEnum).indexOf(
+      type.toUpperCase() as unknown as PokemonTypeEnum
+    );
+    const colorValue = Object.values(PokemonTypeEnum)[indexOfType];
+
+    return colorValue;
   }
 }
