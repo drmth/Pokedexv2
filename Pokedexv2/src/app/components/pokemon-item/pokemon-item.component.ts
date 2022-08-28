@@ -42,6 +42,10 @@ export class PokemonItemComponent implements OnInit {
       });
   }
 
+  getPokemonDescription(): string {
+    return this.pokemonService.getPokemonDescription();
+  }
+
   populateEvolutionArray(pokemonName: string) {
     this.evolution.push(pokemonName);
   }

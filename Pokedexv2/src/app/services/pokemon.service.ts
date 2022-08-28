@@ -4,6 +4,7 @@ import { ListOfPokemonAndURL } from '../interfaces/list-of-pokemon-and-url';
 import { APIService } from './api.service';
 import { switchMap } from 'rxjs';
 import { PokemonTypeEnum } from '../interfaces/pokemon-type';
+import { FlavorTextEntry, PokemonSpecies } from '../interfaces/pokemon-species';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,7 @@ export class PokemonService {
   public listOfDetailedPokemons: Pokemon[] = [];
   typesFilter: string[] | undefined;
   searchFilter: string = '';
+  currentPokemonDescription: string[] = [];
 
   constructor(private APIService: APIService) {}
 
@@ -68,18 +70,46 @@ export class PokemonService {
 
   getPokemonEvolutionChain(currentPokemonID: number) {
     return this.APIService.getPokemonEvolutionChain(currentPokemonID).pipe(
-      switchMap((pokemonEvolutionChain) =>
-        this.APIService.getPokemonEvolution(
+      switchMap((pokemonEvolutionChain: PokemonSpecies) => {
+        this.setPokemonDescriptionArray(
+          pokemonEvolutionChain.flavor_text_entries
+        );
+        return this.APIService.getPokemonEvolution(
           pokemonEvolutionChain.evolution_chain.url
-        )
-      )
+        );
+      })
     );
+  }
+
+  setPokemonDescriptionArray(flavor_text_entries: FlavorTextEntry[]) {
+    this.currentPokemonDescription = [];
+    flavor_text_entries.forEach((flavor_text_entry: FlavorTextEntry) => {
+      if (flavor_text_entry.language.name === 'en') {
+        this.currentPokemonDescription.push(
+          this.removeNewLineCharactersFromString(flavor_text_entry.flavor_text)
+        );
+      }
+    });
+  }
+
+  getPokemonDescription(): string {
+    if (this.currentPokemonDescription.length > 0) {
+      let uniqueDecriptionValue = [...new Set(this.currentPokemonDescription)];
+
+      return uniqueDecriptionValue.join(' ');
+    }
+
+    return '';
   }
 
   getPokemonType(): string[] {
     return Object.keys(PokemonTypeEnum)
       .filter((key) => isNaN(+key))
       .sort();
+  }
+
+  removeNewLineCharactersFromString(string: string): string {
+    return string.replace(/\n|\f/g, ' ');
   }
 
   getTypeColor(type: string): string {

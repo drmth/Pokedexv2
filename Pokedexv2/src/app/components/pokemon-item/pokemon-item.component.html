@@ -1,23 +1,35 @@
 <app-header></app-header>
 <div *ngIf="currentPokemon">
   <div class="container">
-    <div class="pokemon_simple_infos">
-      <h1>
-        {{
-          currentPokemon.name.charAt(0).toUpperCase() +
-            currentPokemon.name.slice(1)
-        }}
-      </h1>
-      <div class="type" *ngFor="let type of currentPokemon?.types">
-        <p style="color: {{ getTypeColor(type.type.name) }}">
-          {{ type.type.name }}
-        </p>
+    <div class="quick_pokemon_overview">
+      <div class="center_elements">
+        <h1>
+          {{
+            currentPokemon.name.charAt(0).toUpperCase() +
+              currentPokemon.name.slice(1)
+          }}
+        </h1>
+        <div class="type" *ngFor="let type of currentPokemon?.types">
+          <p style="color: {{ getTypeColor(type.type.name) }}">
+            {{ type.type.name }}
+          </p>
+        </div>
+      </div>
+      <div>
+        <h2>#{{ currentPokemon.id }}</h2>
+      </div>
+      <div>
+        <img
+          [src]="currentPokemon.sprites.front_default"
+          alt="{{ currentPokemon.name }}"
+        />
       </div>
     </div>
-
-    <div>
-      <h2>{{ currentPokemon.id }}</h2>
+    <div class="description">
+      <p>Infos</p>
+      <p>{{ getPokemonDescription() }}</p>
     </div>
+
     <div class="type-container">
       <div class="type" *ngFor="let type of currentPokemon?.types">
         <p style="color: {{ getTypeColor(type.type.name) }}">
