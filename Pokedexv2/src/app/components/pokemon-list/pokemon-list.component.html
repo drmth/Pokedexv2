@@ -1,0 +1,93 @@
+<div class="filter">
+  <div class="row">
+    <div class="col">
+      <div ngbDropdown class="d-inline-block">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          id="dropdownBasic1"
+          ngbDropdownToggle
+        >
+          Filtrer
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <div *ngFor="let type of getPokemonType()">
+            <button ngbDropdownItem (click)="filterListOfPokemonByType(type)">
+              {{ type }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<div class="selectedFilter">
+  <div *ngFor="let filter of filters">
+    <div class="filter">
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        id="{{ filter }}"
+        (click)="removeFilter(filter)"
+      ></button>
+      <label for="{{ filter }}">{{ filter }}</label>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<div class="wrapper">
+  <div class="loader" *ngIf="pokemonsList.length == 0; then loader"></div>
+  <ng-template #loader>
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only"></span>
+    </div>
+  </ng-template>
+  <div
+    *ngFor="
+      let pokemon of pokemonsList | filterPokemonArayWithString: userResearch
+    "
+  >
+    <div class="card" [routerLink]="['/pokemon', pokemon.name]">
+      <div>
+        <h3>#{{ pokemon.id }}</h3>
+      </div>
+      <div class="center_elements">
+        <img [src]="pokemon.sprites.front_default" alt="{{ pokemon.name }}" />
+      </div>
+      <div class="center_elements">
+        <h2>
+          {{ pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1) }}
+        </h2>
+      </div>
+      <div class="center_elements">
+        <div *ngFor="let type of pokemon.types; let indexOfelement = index">
+          <p style="color: {{ getTypeColor(type.type.name) }}">
+            {{ type.type.name }}&nbsp;
+          </p>
+        </div>
+      </div>
+      <div class="center_elements">
+        <img
+          src="/assets/images/baseline_height_black_24dp.png"
+          alt="height_icon"
+        />
+        height:&nbsp;
+        <div>{{ pokemon.height }}</div>
+      </div>
+      <div class="center_elements">
+        <img
+          src="/assets/images/baseline_scale_black_24dp.png"
+          alt="scale_icon"
+        />
+        weight:&nbsp;
+        <div>{{ pokemon.weight }}</div>
+      </div>
+    </div>
+  </div>
+</div>

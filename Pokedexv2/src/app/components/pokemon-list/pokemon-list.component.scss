@@ -1,0 +1,33 @@
+$gray_color: #dcdcdc;
+
+$small_space: 8px;
+$medium_space: 16px;
+$large_space: 24px;
+
+.filter {
+  margin-left: $large_space;
+  display: inline-block;
+}
+
+.selectedFilter {
+  margin: $small_space;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+
+  .card {
+    padding: $small_space;
+    margin: $medium_space;
+    border-radius: $large_space;
+
+    .center_elements {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
