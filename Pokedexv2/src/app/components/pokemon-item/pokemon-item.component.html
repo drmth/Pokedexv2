@@ -27,29 +27,67 @@
     </div>
     <div class="description">
       <p>Infos</p>
-      <p>{{ getPokemonDescription() }}</p>
-    </div>
 
-    <div class="type-container">
-      <div class="type" *ngFor="let type of currentPokemon?.types">
-        <p style="color: {{ getTypeColor(type.type.name) }}">
-          {{ type.type.name }}
-        </p>
+      <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li
+          class="nav-item"
+          role="presentation"
+          *ngFor="let description of getPokemonDescription()"
+        >
+          <button
+            class="nav-link"
+            id="{{ description.version.name }}"
+            data-bs-target="#{{ description.version.name }}"
+            data-bs-toggle="tab"
+            type="button"
+            role="tab"
+          >
+            {{ description.version.name }}
+          </button>
+        </li>
+      </ul>
+      <div
+        class="tab-content"
+        *ngFor="let description of getPokemonDescription()"
+      >
+        <div
+          class="tab-pane active"
+          id="{{ description.version.name }}"
+          role="tabpanel"
+          aria-labelledby="{{"
+          description.version.name
+          }}
+        >
+          {{ description.flavor_text }}
+        </div>
+      </div> -->
+      <div class="stats" *ngFor="let stat of currentPokemon.stats">
+        <p>Stats</p>
+        <p>{{ stat.stat.name }}</p>
+        <p>{{ stat.base_stat }}</p>
       </div>
-    </div>
-    <div>
-      <img
-        [src]="currentPokemon.sprites.front_default"
-        alt="{{ currentPokemon.name }}"
-      />
-    </div>
-    <div *ngIf="evolution === []">
-      <div class="spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
+
+      <div class="type-container">
+        <div class="type" *ngFor="let type of currentPokemon?.types">
+          <p style="color: {{ getTypeColor(type.type.name) }}">
+            {{ type.type.name }}
+          </p>
+        </div>
       </div>
-    </div>
-    <div *ngFor="let pokemon of evolution">
-      {{ pokemon }}
+      <div>
+        <img
+          [src]="currentPokemon.sprites.front_default"
+          alt="{{ currentPokemon.name }}"
+        />
+      </div>
+      <div *ngIf="evolution === []">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div *ngFor="let pokemon of evolution">
+        {{ pokemon }}
+      </div>
     </div>
   </div>
 </div>

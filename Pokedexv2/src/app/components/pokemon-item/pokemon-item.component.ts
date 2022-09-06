@@ -3,6 +3,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Pokemon } from 'src/app/interfaces/pokemon';
 import { Chain, EvolutionChain } from 'src/app/interfaces/evolution-chain';
 import { PokemonService } from 'src/app/services/pokemon.service';
+import { FlavorTextEntry } from 'src/app/interfaces/pokemon-species';
 
 @Component({
   selector: 'app-pokemon-item',
@@ -42,7 +43,7 @@ export class PokemonItemComponent implements OnInit {
       });
   }
 
-  getPokemonDescription(): string {
+  getPokemonDescription(): FlavorTextEntry[] {
     return this.pokemonService.getPokemonDescription();
   }
 

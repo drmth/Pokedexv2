@@ -14,7 +14,7 @@ export class PokemonService {
   public listOfDetailedPokemons: Pokemon[] = [];
   typesFilter: string[] | undefined;
   searchFilter: string = '';
-  currentPokemonDescription: string[] = [];
+  currentPokemonDescription: FlavorTextEntry[] = [];
 
   constructor(private APIService: APIService) {}
 
@@ -85,21 +85,29 @@ export class PokemonService {
     this.currentPokemonDescription = [];
     flavor_text_entries.forEach((flavor_text_entry: FlavorTextEntry) => {
       if (flavor_text_entry.language.name === 'en') {
-        this.currentPokemonDescription.push(
-          this.removeNewLineCharactersFromString(flavor_text_entry.flavor_text)
-        );
+        const obj: FlavorTextEntry = {
+          flavor_text: this.removeSpecialCharactersFromString(
+            flavor_text_entry.flavor_text
+          ),
+          language: {
+            name: flavor_text_entry.language.name,
+            url: flavor_text_entry.language.url,
+          },
+          version: {
+            name: flavor_text_entry.version.name,
+            url: flavor_text_entry.version.url,
+          },
+        };
+
+        this.currentPokemonDescription.push(obj);
       }
     });
+
+    console.log(this.currentPokemonDescription);
   }
 
-  getPokemonDescription(): string {
-    if (this.currentPokemonDescription.length > 0) {
-      let uniqueDecriptionValue = [...new Set(this.currentPokemonDescription)];
-
-      return uniqueDecriptionValue.join(' ');
-    }
-
-    return '';
+  getPokemonDescription(): FlavorTextEntry[] {
+    return this.currentPokemonDescription;
   }
 
   getPokemonType(): string[] {
@@ -108,7 +116,7 @@ export class PokemonService {
       .sort();
   }
 
-  removeNewLineCharactersFromString(string: string): string {
+  removeSpecialCharactersFromString(string: string): string {
     return string.replace(/\n|\f/g, ' ');
   }
 
